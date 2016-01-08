@@ -8,7 +8,7 @@ define( [
 	"./support"
 ], function( jQuery, document, rsingleTag, buildFragment, support ) {
 
-// data: string of html
+// Argument "data" should be string of html
 // context (optional): If specified, the fragment will be created in this context,
 // defaults to document
 // keepScripts (optional): If true, will include scripts passed in the html string
@@ -21,8 +21,8 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 		context = false;
 	}
 
-	// document.implementation stops scripts or inline event handlers from
-	// being executed immediately
+	// Stop scripts or inline event handlers from being executed immediately
+	// by using document.implementation
 	context = context || ( support.createHTMLDocument ?
 		document.implementation.createHTMLDocument( "" ) :
 		document );
