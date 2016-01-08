@@ -1,10 +1,11 @@
-define([
+define( [
 	"./core",
 	"./selector",
 	"./traversing",
 	"./callbacks",
 	"./deferred",
 	"./core/ready",
+	"./support",
 	"./data",
 	"./queue",
 	"./queue/delay",
@@ -31,6 +32,6 @@ define([
 	"./exports/amd"
 ], function( jQuery ) {
 
-return (window.jQuery = window.$ = jQuery);
+return ( window.jQuery = window.$ = jQuery );
 
-});
+} );
