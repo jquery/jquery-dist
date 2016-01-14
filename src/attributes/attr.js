@@ -7,7 +7,14 @@ define( [
 ], function( jQuery, access, support, rnotwhite ) {
 
 var boolHook,
-	attrHandle = jQuery.expr.attrHandle;
+	attrHandle = jQuery.expr.attrHandle,
+
+	// Exclusively lowercase A-Z in attribute names (gh-2730)
+	// https://dom.spec.whatwg.org/#converted-to-ascii-lowercase
+	raz = /[A-Z]+/g,
+	lowercase = function( ch ) {
+		return ch.toLowerCase();
+	};
 
 jQuery.fn.extend( {
 	attr: function( name, value ) {
@@ -39,7 +46,7 @@ jQuery.extend( {
 		// All attributes are lowercase
 		// Grab necessary hook if one is defined
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
-			name = name.toLowerCase();
+			name = name.replace( raz, lowercase );
 			hooks = jQuery.attrHooks[ name ] ||
 				( jQuery.expr.match.bool.test( name ) ? boolHook : undefined );
 		}
@@ -86,21 +93,12 @@ jQuery.extend( {
 	},
 
 	removeAttr: function( elem, value ) {
-		var name, propName,
+		var name,
 			i = 0,
 			attrNames = value && value.match( rnotwhite );
 
 		if ( attrNames && elem.nodeType === 1 ) {
 			while ( ( name = attrNames[ i++ ] ) ) {
-				propName = jQuery.propFix[ name ] || name;
-
-				// Boolean attributes get special treatment (#10870)
-				if ( jQuery.expr.match.bool.test( name ) ) {
-
-					// Set corresponding property to false
-					elem[ propName ] = false;
-				}
-
 				elem.removeAttribute( name );
 			}
 		}
@@ -120,6 +118,7 @@ boolHook = {
 		return name;
 	}
 };
+
 jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) {
 	var getter = attrHandle[ name ] || jQuery.find.attr;
 
