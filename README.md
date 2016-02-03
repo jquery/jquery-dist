@@ -11,13 +11,13 @@ Below are some of the most common ways to include jQuery.
 
 ### Browser
 
-1\. Script tag
+#### Script tag
 
 ```html
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 ```
 
-2\. Babel
+#### Babel
 
 [Babel](http://babeljs.io/) is a next generation JavaScript compiler. One of the features is the ability to use ES6/ES2015 modules now, even though browsers do not yet support this feature natively.
 
@@ -25,7 +25,7 @@ Below are some of the most common ways to include jQuery.
 import $ from "jquery";
 ```
 
-3\. Browserify/Webpack
+#### Browserify/Webpack
 
 There are several ways to use [Browserify](http://browserify.org/) and [Webpack](https://webpack.github.io/). For more information on using these tools, please refer to the corresponding project's documention. In the script, including jQuery will usually look like this...
 
@@ -33,7 +33,7 @@ There are several ways to use [Browserify](http://browserify.org/) and [Webpack]
 var $ = require("jquery");
 ```
 
-4\. AMD (Asynchronous Module Definition)
+#### AMD (Asynchronous Module Definition)
 
 AMD is a module format built for the browser. For more information, we recommend [require.js' documentation](http://requirejs.org/docs/whyamd.html).
 
