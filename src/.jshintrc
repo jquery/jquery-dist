@@ -10,7 +10,6 @@
 	"undef": true,
 	"unused": true,
 
-	"evil": true,
 	"sub": true,
 
 	// Support: IE < 10, Android < 4.1
@@ -23,8 +22,8 @@
 		"JSON": false,
 
 		"jQuery": true,
-		"define": false,
-		"module": false,
+		"define": true,
+		"module": true,
 		"noGlobal": true
 	}
 }
