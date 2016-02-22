@@ -2,12 +2,12 @@
   "name": "jquery",
   "title": "jQuery",
   "description": "JavaScript library for DOM operations",
-  "version": "3.0.0-beta1",
+  "version": "1.12.1",
   "main": "dist/jquery.js",
-  "homepage": "https://jquery.com",
+  "homepage": "http://jquery.com",
   "author": {
     "name": "jQuery Foundation and other contributors",
-    "url": "https://github.com/jquery/jquery/blob/3.0.0-beta1/AUTHORS.txt"
+    "url": "https://github.com/jquery/jquery/blob/1.12-stable/AUTHORS.txt"
   },
   "repository": {
     "type": "git",
@@ -41,14 +41,12 @@
     "gzip-js": "0.3.2",
     "jsdom": "5.6.1",
     "load-grunt-tasks": "1.0.0",
-    "native-promise-only": "0.7.8-a",
-    "promises-aplus-tests": "2.1.0",
-    "q": "1.1.2",
+    "npm": "2.1.12",
     "qunitjs": "1.17.1",
     "qunit-assert-step": "1.0.3",
     "requirejs": "2.1.17",
-    "sinon": "1.10.3",
-    "sizzle": "2.3.0",
+    "sinon": "1.12.2",
+    "sizzle": "2.2.1",
     "strip-json-comments": "1.0.3",
     "testswarm": "1.1.0",
     "win-spawn": "2.0.0"

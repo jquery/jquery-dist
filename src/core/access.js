@@ -6,7 +6,7 @@ define( [
 // The value/s can optionally be executed if it's a function
 var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 	var i = 0,
-		len = elems.length,
+		length = elems.length,
 		bulk = key == null;
 
 	// Sets many values
@@ -41,11 +41,11 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		}
 
 		if ( fn ) {
-			for ( ; i < len; i++ ) {
+			for ( ; i < length; i++ ) {
 				fn(
-					elems[ i ], key, raw ?
-					value :
-					value.call( elems[ i ], i, fn( elems[ i ], key ) )
+					elems[ i ],
+					key,
+					raw ? value : value.call( elems[ i ], i, fn( elems[ i ], key ) )
 				);
 			}
 		}
@@ -57,7 +57,7 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		// Gets
 		bulk ?
 			fn.call( elems ) :
-			len ? fn( elems[ 0 ], key ) : emptyGet;
+			length ? fn( elems[ 0 ], key ) : emptyGet;
 };
 
 return access;
