@@ -190,9 +190,9 @@ jQuery.Callbacks = function( options ) {
 			// Also disable .add unless we have memory (since it would have no effect)
 			// Abort any pending executions
 			lock: function() {
-				locked = queue = [];
+				locked = true;
 				if ( !memory ) {
-					list = memory = "";
+					self.disable();
 				}
 				return this;
 			},
