@@ -5,7 +5,7 @@ define( [
 	"../selector"
 ], function( jQuery, access, support ) {
 
-var rfocusable = /^(?:input|select|textarea|button|object)$/i,
+var rfocusable = /^(?:input|select|textarea|button)$/i,
 	rclickable = /^(?:a|area)$/i;
 
 jQuery.fn.extend( {
@@ -14,14 +14,8 @@ jQuery.fn.extend( {
 	},
 
 	removeProp: function( name ) {
-		name = jQuery.propFix[ name ] || name;
 		return this.each( function() {
-
-			// try/catch handles cases where IE balks (such as removing a property on window)
-			try {
-				this[ name ] = undefined;
-				delete this[ name ];
-			} catch ( e ) {}
+			delete this[ jQuery.propFix[ name ] || name ];
 		} );
 	}
 } );
@@ -85,21 +79,7 @@ jQuery.extend( {
 	}
 } );
 
-// Some attributes require a special call on IE
-// http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
-if ( !support.hrefNormalized ) {
-
-	// href/src property should get the full normalized URL (#10299/#12915)
-	jQuery.each( [ "href", "src" ], function( i, name ) {
-		jQuery.propHooks[ name ] = {
-			get: function( elem ) {
-				return elem.getAttribute( name, 4 );
-			}
-		};
-	} );
-}
-
-// Support: Safari, IE9+
+// Support: IE <=11 only
 // Accessing the selectedIndex property
 // forces the browser to respect setting selected
 // on the option
@@ -109,14 +89,8 @@ if ( !support.optSelected ) {
 	jQuery.propHooks.selected = {
 		get: function( elem ) {
 			var parent = elem.parentNode;
-
-			if ( parent ) {
-				parent.selectedIndex;
-
-				// Make sure that it also works with optgroups, see #5701
-				if ( parent.parentNode ) {
-					parent.parentNode.selectedIndex;
-				}
+			if ( parent && parent.parentNode ) {
+				parent.parentNode.selectedIndex;
 			}
 			return null;
 		},
@@ -147,10 +121,5 @@ jQuery.each( [
 ], function() {
 	jQuery.propFix[ this.toLowerCase() ] = this;
 } );
-
-// IE6/7 call enctype encoding
-if ( !support.enctype ) {
-	jQuery.propFix.enctype = "encoding";
-}
 
 } );
