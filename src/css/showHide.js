@@ -1,7 +1,4 @@
-define( [
-	"../data/var/dataPriv"
-], function( dataPriv ) {
-
+define( [], function() {
 function showHide( elements, show ) {
 	var display, elem,
 		values = [],
@@ -20,14 +17,14 @@ function showHide( elements, show ) {
 			if ( display === "none" ) {
 
 				// Restore a pre-hide() value if we have one
-				values[ index ] = dataPriv.get( elem, "display" ) || "";
+				values[ index ] = jQuery._data( elem, "display" ) || "";
 			}
 		} else {
 			if ( display !== "none" ) {
 				values[ index ] = "none";
 
 				// Remember the value we're replacing
-				dataPriv.set( elem, "display", display );
+				jQuery._data( elem, "display", display );
 			}
 		}
 	}
