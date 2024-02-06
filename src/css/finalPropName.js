@@ -1,9 +1,4 @@
-define( [
-	"../var/document",
-	"../core"
-], function( document, jQuery ) {
-
-"use strict";
+import { document } from "../var/document.js";
 
 var cssPrefixes = [ "Webkit", "Moz", "ms" ],
 	emptyStyle = document.createElement( "div" ).style,
@@ -24,9 +19,9 @@ function vendorPropName( name ) {
 	}
 }
 
-// Return a potentially-mapped jQuery.cssProps or vendor prefixed property
-function finalPropName( name ) {
-	var final = jQuery.cssProps[ name ] || vendorProps[ name ];
+// Return a potentially-mapped vendor prefixed property
+export function finalPropName( name ) {
+	var final = vendorProps[ name ];
 
 	if ( final ) {
 		return final;
@@ -36,7 +31,3 @@ function finalPropName( name ) {
 	}
 	return vendorProps[ name ] = vendorPropName( name ) || name;
 }
-
-return finalPropName;
-
-} );
