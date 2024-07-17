@@ -8,11 +8,16 @@
  *
  * Date: 2024-07-17T13:32Z
  */
-// For ECMAScript module environments where a proper `window`
-// is present, execute the factory and get jQuery.
-function jQueryFactory( window, noGlobal ) {
+// Expose a factory as `jQueryFactory`. Aimed at environments without
+// a real `window` where an emulated window needs to be constructed. Example:
+//
+//     import { jQueryFactory } from "jquery/factory";
+//     const jQuery = jQueryFactory( window );
+//
+// See ticket trac-14549 for more info.
+function jQueryFactoryWrapper( window, noGlobal ) {
 
-if ( typeof window === "undefined" || !window.document ) {
+if ( !window.document ) {
 	throw new Error( "jQuery requires a window with a document" );
 }
 
@@ -6869,8 +6874,6 @@ return jQuery;
 
 }
 
-var jQuery = jQueryFactory( window, true );
-
-export { jQuery, jQuery as $ };
-
-export default jQuery;
+export function jQueryFactory( window ) {
+	return jQueryFactoryWrapper( window, true );
+}

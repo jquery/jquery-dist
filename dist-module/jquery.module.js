@@ -1,12 +1,12 @@
 /*!
- * jQuery JavaScript Library v4.0.0-beta
+ * jQuery JavaScript Library v4.0.0-beta.2
  * https://jquery.com/
  *
  * Copyright OpenJS Foundation and other contributors
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2024-02-06T16:40Z
+ * Date: 2024-07-17T13:32Z
  */
 // For ECMAScript module environments where a proper `window`
 // is present, execute the factory and get jQuery.
@@ -75,7 +75,7 @@ function isArrayLike( obj ) {
 		typeof length === "number" && length > 0 && ( length - 1 ) in obj;
 }
 
-var document = window.document;
+var document$1 = window.document;
 
 var preservedScriptAttributes = {
 	type: true,
@@ -85,7 +85,7 @@ var preservedScriptAttributes = {
 };
 
 function DOMEval( code, node, doc ) {
-	doc = doc || document;
+	doc = doc || document$1;
 
 	var i,
 		script = doc.createElement( "script" );
@@ -102,7 +102,7 @@ function DOMEval( code, node, doc ) {
 	}
 }
 
-var version = "4.0.0-beta",
+var version = "4.0.0-beta.2",
 
 	rhtmlSuffix = /HTML$/i,
 
@@ -514,7 +514,7 @@ var pop = arr.pop;
 // https://www.w3.org/TR/css3-selectors/#whitespace
 var whitespace = "[\\x20\\t\\r\\n\\f]";
 
-var isIE = document.documentMode;
+var isIE = document$1.documentMode;
 
 // Support: Chrome 105 - 111 only, Safari 15.4 - 16.3 only
 // Make sure the `:has()` argument is parsed unforgivingly.
@@ -526,7 +526,7 @@ var isIE = document.documentMode;
 // environments will fail in the qSA path and fall back to jQuery traversal
 // anyway.
 try {
-	document.querySelector( ":has(*,:jqfake)" );
+	document$1.querySelector( ":has(*,:jqfake)" );
 	support.cssHas = false;
 } catch ( e ) {
 	support.cssHas = true;
@@ -582,11 +582,11 @@ var rdescend = new RegExp( whitespace + "|>" );
 
 var rsibling = /[+~]/;
 
-var documentElement = document.documentElement;
+var documentElement$1 = document$1.documentElement;
 
 // Support: IE 9 - 11+
 // IE requires a prefix.
-var matches = documentElement.matches || documentElement.msMatchesSelector;
+var matches = documentElement$1.matches || documentElement$1.msMatchesSelector;
 
 /**
  * Create key-value caches of limited size
@@ -658,6 +658,7 @@ var filterMatchExpr = {
 var rpseudo = new RegExp( pseudos );
 
 // CSS escapes
+// https://www.w3.org/TR/CSS21/syndata.html#escaped-characters
 
 var runescape = new RegExp( "\\\\[\\da-fA-F]{1,6}" + whitespace +
 	"?|\\\\([^\\r\\n\\f])", "g" ),
@@ -956,7 +957,14 @@ jQuery.extend( {
 		}
 
 		if ( value !== undefined ) {
-			if ( value === null ) {
+			if ( value === null ||
+
+				// For compat with previous handling of boolean attributes,
+				// remove when `false` passed. For ARIA attributes -
+				// many of which recognize a `"false"` value - continue to
+				// set the `"false"` value as jQuery <4 did.
+				( value === false && name.toLowerCase().indexOf( "aria-" ) !== 0 ) ) {
+
 				jQuery.removeAttr( elem, name );
 				return;
 			}
@@ -1014,35 +1022,6 @@ if ( isIE ) {
 		}
 	};
 }
-
-// HTML boolean attributes have special behavior:
-// we consider the lowercase name to be the only valid value, so
-// getting (if the attribute is present) normalizes to that, as does
-// setting to any non-`false` value (and setting to `false` removes the attribute).
-// See https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes
-jQuery.each( (
-	"checked selected async autofocus autoplay controls defer disabled " +
-	"hidden ismap loop multiple open readonly required scoped"
-).split( " " ), function( _i, name ) {
-	jQuery.attrHooks[ name ] = {
-		get: function( elem ) {
-			return elem.getAttribute( name ) != null ?
-				name.toLowerCase() :
-				null;
-		},
-
-		set: function( elem, value, name ) {
-			if ( value === false ) {
-
-				// Remove boolean attributes when set to false
-				jQuery.removeAttr( elem, name );
-			} else {
-				elem.setAttribute( name, name );
-			}
-			return name;
-		}
-	};
-} );
 
 // CSS string/identifier serialization
 // https://drafts.csswg.org/cssom/#common-serializing-idioms
@@ -1108,8 +1087,8 @@ function sortOrder( a, b ) {
 		// IE sometimes throws a "Permission denied" error when strict-comparing
 		// two documents; shallow comparisons work.
 		// eslint-disable-next-line eqeqeq
-		if ( a == document || a.ownerDocument == document &&
-			jQuery.contains( document, a ) ) {
+		if ( a == document$1 || a.ownerDocument == document$1 &&
+			jQuery.contains( document$1, a ) ) {
 			return -1;
 		}
 
@@ -1117,8 +1096,8 @@ function sortOrder( a, b ) {
 		// IE sometimes throws a "Permission denied" error when strict-comparing
 		// two documents; shallow comparisons work.
 		// eslint-disable-next-line eqeqeq
-		if ( b == document || b.ownerDocument == document &&
-			jQuery.contains( document, b ) ) {
+		if ( b == document$1 || b.ownerDocument == document$1 &&
+			jQuery.contains( document$1, b ) ) {
 			return 1;
 		}
 
@@ -1165,8 +1144,8 @@ var i,
 	outermostContext,
 
 	// Local document vars
-	document$1,
-	documentElement$1,
+	document,
+	documentElement,
 	documentIsHTML,
 
 	// Instance-specific data
@@ -1196,7 +1175,7 @@ var i,
 	rheader = /^h\d$/i,
 
 	// Easily-parseable/retrievable ID or TAG or CLASS selectors
-	rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
+	rquickExpr$1 = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
 
 	// Used for iframes; see `setDocument`.
 	// Support: IE 9 - 11+
@@ -1232,13 +1211,13 @@ function find( selector, context, results, seed ) {
 	// Try to shortcut find operations (as opposed to filters) in HTML documents
 	if ( !seed ) {
 		setDocument( context );
-		context = context || document$1;
+		context = context || document;
 
 		if ( documentIsHTML ) {
 
 			// If the selector is sufficiently simple, try using a "get*By*" DOM method
 			// (excepting DocumentFragment context, where the methods don't exist)
-			if ( nodeType !== 11 && ( match = rquickExpr.exec( selector ) ) ) {
+			if ( nodeType !== 11 && ( match = rquickExpr$1.exec( selector ) ) ) {
 
 				// ID selector
 				if ( ( m = match[ 1 ] ) ) {
@@ -1453,21 +1432,21 @@ function createPositionalPseudo( fn ) {
  */
 function setDocument( node ) {
 	var subWindow,
-		doc = node ? node.ownerDocument || node : document;
+		doc = node ? node.ownerDocument || node : document$1;
 
 	// Return early if doc is invalid or already selected
 	// Support: IE 11+
 	// IE sometimes throws a "Permission denied" error when strict-comparing
 	// two documents; shallow comparisons work.
 	// eslint-disable-next-line eqeqeq
-	if ( doc == document$1 || doc.nodeType !== 9 ) {
+	if ( doc == document || doc.nodeType !== 9 ) {
 		return;
 	}
 
 	// Update global variables
-	document$1 = doc;
-	documentElement$1 = document$1.documentElement;
-	documentIsHTML = !jQuery.isXMLDoc( document$1 );
+	document = doc;
+	documentElement = document.documentElement;
+	documentIsHTML = !jQuery.isXMLDoc( document );
 
 	// Support: IE 9 - 11+
 	// Accessing iframe documents after unload throws "permission denied" errors (see trac-13936)
@@ -1475,8 +1454,8 @@ function setDocument( node ) {
 	// IE sometimes throws a "Permission denied" error when strict-comparing
 	// two documents; shallow comparisons work.
 	// eslint-disable-next-line eqeqeq
-	if ( isIE && document != document$1 &&
-		( subWindow = document$1.defaultView ) && subWindow.top !== subWindow ) {
+	if ( isIE && document$1 != document &&
+		( subWindow = document.defaultView ) && subWindow.top !== subWindow ) {
 		subWindow.addEventListener( "unload", unloadHandler );
 	}
 }
@@ -1499,7 +1478,7 @@ find.matchesSelector = function( elem, expr ) {
 		}
 	}
 
-	return find( expr, document$1, null, [ elem ] ).length > 0;
+	return find( expr, document, null, [ elem ] ).length > 0;
 };
 
 jQuery.expr = {
@@ -1840,12 +1819,12 @@ jQuery.expr = {
 		},
 
 		root: function( elem ) {
-			return elem === documentElement$1;
+			return elem === documentElement;
 		},
 
 		focus: function( elem ) {
-			return elem === document$1.activeElement &&
-				document$1.hasFocus() &&
+			return elem === document.activeElement &&
+				document.hasFocus() &&
 				!!( elem.type || elem.href || ~elem.tabIndex );
 		},
 
@@ -2279,7 +2258,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// IE sometimes throws a "Permission denied" error when strict-comparing
 				// two documents; shallow comparisons work.
 				// eslint-disable-next-line eqeqeq
-				outermostContext = context == document$1 || context || outermost;
+				outermostContext = context == document || context || outermost;
 			}
 
 			// Add elements passing elementMatchers directly to results
@@ -2291,12 +2270,12 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 					// IE sometimes throws a "Permission denied" error when strict-comparing
 					// two documents; shallow comparisons work.
 					// eslint-disable-next-line eqeqeq
-					if ( !context && elem.ownerDocument != document$1 ) {
+					if ( !context && elem.ownerDocument != document ) {
 						setDocument( elem );
 						xml = !documentIsHTML;
 					}
 					while ( ( matcher = elementMatchers[ j++ ] ) ) {
-						if ( matcher( elem, context || document$1, xml ) ) {
+						if ( matcher( elem, context || document, xml ) ) {
 							push.call( results, elem );
 							break;
 						}
@@ -2641,7 +2620,7 @@ var rootjQuery,
 	// Prioritize #id over <tag> to avoid XSS via location.hash (trac-9521)
 	// Strict HTML recognition (trac-11290: must start with <)
 	// Shortcut simple #id case for speed
-	rquickExpr$1 = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
+	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
 
 	init = jQuery.fn.init = function( selector, context ) {
 		var match, elem;
@@ -2679,7 +2658,7 @@ var rootjQuery,
 
 			// Handle HTML strings or selectors
 			} else if ( typeof selector === "string" ) {
-				match = rquickExpr$1.exec( selector );
+				match = rquickExpr.exec( selector );
 			} else {
 				return jQuery.makeArray( selector, this );
 			}
@@ -2696,7 +2675,7 @@ var rootjQuery,
 					// Intentionally let the error be thrown if parseHTML is not present
 					jQuery.merge( this, jQuery.parseHTML(
 						match[ 1 ],
-						context && context.nodeType ? context.ownerDocument || context : document,
+						context && context.nodeType ? context.ownerDocument || context : document$1,
 						true
 					) );
 
@@ -2719,7 +2698,7 @@ var rootjQuery,
 
 				// HANDLE: $(#id)
 				} else {
-					elem = document.getElementById( match[ 2 ] );
+					elem = document$1.getElementById( match[ 2 ] );
 
 					if ( elem ) {
 
@@ -2747,7 +2726,7 @@ var rootjQuery,
 init.prototype = jQuery.fn;
 
 // Initialize central reference
-rootjQuery = jQuery( document );
+rootjQuery = jQuery( document$1 );
 
 var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 
@@ -3608,7 +3587,7 @@ jQuery.extend( {
 		}
 
 		// If there are functions bound, to execute
-		readyList.resolveWith( document, [ jQuery ] );
+		readyList.resolveWith( document$1, [ jQuery ] );
 	}
 } );
 
@@ -3616,14 +3595,14 @@ jQuery.ready.then = readyList.then;
 
 // The ready event handler and self cleanup method
 function completed() {
-	document.removeEventListener( "DOMContentLoaded", completed );
+	document$1.removeEventListener( "DOMContentLoaded", completed );
 	window.removeEventListener( "load", completed );
 	jQuery.ready();
 }
 
 // Catch cases where $(document).ready() is called
 // after the browser event has already occurred.
-if ( document.readyState !== "loading" ) {
+if ( document$1.readyState !== "loading" ) {
 
 	// Handle it asynchronously to allow scripts the opportunity to delay ready
 	window.setTimeout( jQuery.ready );
@@ -3631,7 +3610,7 @@ if ( document.readyState !== "loading" ) {
 } else {
 
 	// Use the handy event callback
-	document.addEventListener( "DOMContentLoaded", completed );
+	document$1.addEventListener( "DOMContentLoaded", completed );
 
 	// A fallback to window.onload, that will always work
 	window.addEventListener( "load", completed );
@@ -4360,7 +4339,7 @@ var isAttached = function( elem ) {
 // Support: IE 9 - 11+
 // Check attachment across shadow DOM boundaries when possible (gh-3504).
 // Provide a fallback for browsers without Shadow DOM v1 support.
-if ( !documentElement.getRootNode ) {
+if ( !documentElement$1.getRootNode ) {
 	isAttached = function( elem ) {
 		return jQuery.contains( elem.ownerDocument, elem );
 	};
@@ -4714,7 +4693,7 @@ jQuery.event = {
 		// Ensure that invalid selectors throw exceptions at attach time
 		// Evaluate against documentElement in case elem is a non-element node (e.g., document)
 		if ( selector ) {
-			jQuery.find.matchesSelector( documentElement, selector );
+			jQuery.find.matchesSelector( documentElement$1, selector );
 		}
 
 		// Make sure that the handler has a unique ID, used to find/remove it later
@@ -5123,14 +5102,29 @@ function leverageNative( el, type, isSetup ) {
 			var result,
 				saved = dataPriv.get( this, type );
 
+			// This controller function is invoked under multiple circumstances,
+			// differentiated by the stored value in `saved`:
+			// 1. For an outer synthetic `.trigger()`ed event (detected by
+			//    `event.isTrigger & 1` and non-array `saved`), it records arguments
+			//    as an array and fires an [inner] native event to prompt state
+			//    changes that should be observed by registered listeners (such as
+			//    checkbox toggling and focus updating), then clears the stored value.
+			// 2. For an [inner] native event (detected by `saved` being
+			//    an array), it triggers an inner synthetic event, records the
+			//    result, and preempts propagation to further jQuery listeners.
+			// 3. For an inner synthetic event (detected by `event.isTrigger & 1` and
+			//    array `saved`), it prevents double-propagation of surrogate events
+			//    but otherwise allows everything to proceed (particularly including
+			//    further listeners).
+			// Possible `saved` data shapes: `[...], `{ value }`, `false`.
 			if ( ( event.isTrigger & 1 ) && this[ type ] ) {
 
 				// Interrupt processing of the outer synthetic .trigger()ed event
-				if ( !saved ) {
+				if ( !saved.length ) {
 
 					// Store arguments for use when handling the inner native event
-					// There will always be at least one argument (an event object), so this array
-					// will not be confused with a leftover capture object.
+					// There will always be at least one argument (an event object),
+					// so this array will not be confused with a leftover capture object.
 					saved = slice.call( arguments );
 					dataPriv.set( this, type, saved );
 
@@ -5145,29 +5139,35 @@ function leverageNative( el, type, isSetup ) {
 						event.stopImmediatePropagation();
 						event.preventDefault();
 
-						return result;
+						// Support: Chrome 86+
+						// In Chrome, if an element having a focusout handler is
+						// blurred by clicking outside of it, it invokes the handler
+						// synchronously. If that handler calls `.remove()` on
+						// the element, the data is cleared, leaving `result`
+						// undefined. We need to guard against this.
+						return result && result.value;
 					}
 
-				// If this is an inner synthetic event for an event with a bubbling surrogate
-				// (focus or blur), assume that the surrogate already propagated from triggering
-				// the native event and prevent that from happening again here.
-				// This technically gets the ordering wrong w.r.t. to `.trigger()` (in which the
-				// bubbling surrogate propagates *after* the non-bubbling base), but that seems
-				// less bad than duplication.
+				// If this is an inner synthetic event for an event with a bubbling
+				// surrogate (focus or blur), assume that the surrogate already
+				// propagated from triggering the native event and prevent that
+				// from happening again here.
 				} else if ( ( jQuery.event.special[ type ] || {} ).delegateType ) {
 					event.stopPropagation();
 				}
 
-			// If this is a native event triggered above, everything is now in order
-			// Fire an inner synthetic event with the original arguments
-			} else if ( saved ) {
+			// If this is a native event triggered above, everything is now in order.
+			// Fire an inner synthetic event with the original arguments.
+			} else if ( saved.length ) {
 
 				// ...and capture the result
-				dataPriv.set( this, type, jQuery.event.trigger(
-					saved[ 0 ],
-					saved.slice( 1 ),
-					this
-				) );
+				dataPriv.set( this, type, {
+					value: jQuery.event.trigger(
+						saved[ 0 ],
+						saved.slice( 1 ),
+						this
+					)
+				} );
 
 				// Abort handling of the native event by all jQuery handlers while allowing
 				// native handlers on the same element to run. On target, this is achieved
@@ -5870,7 +5870,7 @@ function curCSS( elem, name, computed ) {
 }
 
 var cssPrefixes = [ "Webkit", "Moz", "ms" ],
-	emptyStyle = document.createElement( "div" ).style,
+	emptyStyle = document$1.createElement( "div" ).style,
 	vendorProps = {};
 
 // Return a vendor-prefixed property or undefined
@@ -5904,7 +5904,7 @@ function finalPropName( name ) {
 ( function() {
 
 var reliableTrDimensionsVal,
-	div = document.createElement( "div" );
+	div = document$1.createElement( "div" );
 
 // Finish early in limited (non-browser) environments
 if ( !div.style ) {
@@ -5920,8 +5920,8 @@ if ( !div.style ) {
 support.reliableTrDimensions = function() {
 	var table, tr, trStyle;
 	if ( reliableTrDimensionsVal == null ) {
-		table = document.createElement( "table" );
-		tr = document.createElement( "tr" );
+		table = document$1.createElement( "table" );
+		tr = document$1.createElement( "tr" );
 
 		table.style.cssText = "position:absolute;left:-11111px;border-collapse:separate";
 		tr.style.cssText = "box-sizing:content-box;border:1px solid";
@@ -5941,23 +5941,23 @@ support.reliableTrDimensions = function() {
 		// gets around this issue.
 		div.style.display = "block";
 
-		documentElement
+		documentElement$1
 			.appendChild( table )
 			.appendChild( tr )
 			.appendChild( div );
 
 		// Don't run until window is visible
 		if ( table.offsetWidth === 0 ) {
-			documentElement.removeChild( table );
+			documentElement$1.removeChild( table );
 			return;
 		}
 
 		trStyle = window.getComputedStyle( tr );
-		reliableTrDimensionsVal = ( parseInt( trStyle.height, 10 ) +
-				parseInt( trStyle.borderTopWidth, 10 ) +
-				parseInt( trStyle.borderBottomWidth, 10 ) ) === tr.offsetHeight;
+		reliableTrDimensionsVal = ( Math.round( parseFloat( trStyle.height ) ) +
+			Math.round( parseFloat( trStyle.borderTopWidth ) ) +
+			Math.round( parseFloat( trStyle.borderBottomWidth ) ) ) === tr.offsetHeight;
 
-		documentElement.removeChild( table );
+		documentElement$1.removeChild( table );
 	}
 	return reliableTrDimensionsVal;
 };
@@ -6474,7 +6474,7 @@ var
 
 function schedule() {
 	if ( inProgress ) {
-		if ( document.hidden === false && window.requestAnimationFrame ) {
+		if ( document$1.hidden === false && window.requestAnimationFrame ) {
 			window.requestAnimationFrame( schedule );
 		} else {
 			window.setTimeout( schedule, 13 );
@@ -7609,11 +7609,11 @@ jQuery.extend( jQuery.event, {
 	trigger: function( event, data, elem, onlyHandlers ) {
 
 		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
-			eventPath = [ elem || document ],
+			eventPath = [ elem || document$1 ],
 			type = hasOwn.call( event, "type" ) ? event.type : event,
 			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
 
-		cur = lastElement = tmp = elem = elem || document;
+		cur = lastElement = tmp = elem = elem || document$1;
 
 		// Don't do events on text and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
@@ -7677,7 +7677,7 @@ jQuery.extend( jQuery.event, {
 			}
 
 			// Only add window if we got to document (e.g., not plain obj or detached DOM)
-			if ( tmp === ( elem.ownerDocument || document ) ) {
+			if ( tmp === ( elem.ownerDocument || document$1 ) ) {
 				eventPath.push( tmp.defaultView || tmp.parentWindow || window );
 			}
 		}
@@ -7968,7 +7968,7 @@ var
 	allTypes = "*/".concat( "*" ),
 
 	// Anchor tag for parsing the document origin
-	originAnchor = document.createElement( "a" );
+	originAnchor = document$1.createElement( "a" );
 
 originAnchor.href = location.href;
 
@@ -8465,7 +8465,7 @@ jQuery.extend( {
 
 		// A cross-domain request is in order when the origin doesn't match the current origin.
 		if ( s.crossDomain == null ) {
-			urlAnchor = document.createElement( "a" );
+			urlAnchor = document$1.createElement( "a" );
 
 			// Support: IE <=8 - 11+
 			// IE throws exception on accessing the href property if url is malformed,
@@ -9076,7 +9076,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 					} );
 
 				// Use native DOM manipulation to avoid our domManip AJAX trickery
-				document.head.appendChild( script[ 0 ] );
+				document$1.head.appendChild( script[ 0 ] );
 			},
 			abort: function() {
 				if ( callback ) {
@@ -9212,13 +9212,13 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 
 		// Stop scripts or inline event handlers from being executed immediately
 		// by using document.implementation
-		context = document.implementation.createHTMLDocument( "" );
+		context = document$1.implementation.createHTMLDocument( "" );
 
 		// Set the base href for the created document
 		// so any parsed elements with URLs
 		// are based on the document's URL (gh-2965)
 		base = context.createElement( "base" );
-		base.href = document.location.href;
+		base.href = document$1.location.href;
 		context.head.appendChild( base );
 	}
 
@@ -9423,12 +9423,13 @@ jQuery.fn.extend( {
 			doc = elem.ownerDocument;
 			offsetParent = elem.offsetParent || doc.documentElement;
 			while ( offsetParent &&
-				( offsetParent === doc.body || offsetParent === doc.documentElement ) &&
+				offsetParent !== doc.documentElement &&
 				jQuery.css( offsetParent, "position" ) === "static" ) {
 
-				offsetParent = offsetParent.parentNode;
+				offsetParent = offsetParent.offsetParent || doc.documentElement;
 			}
-			if ( offsetParent && offsetParent !== elem && offsetParent.nodeType === 1 ) {
+			if ( offsetParent && offsetParent !== elem && offsetParent.nodeType === 1 &&
+				jQuery.css( offsetParent, "position" ) !== "static" ) {
 
 				// Incorporate borders into its offset, since they are outside its content origin
 				parentOffset = jQuery( offsetParent ).offset();
@@ -9462,7 +9463,7 @@ jQuery.fn.extend( {
 				offsetParent = offsetParent.offsetParent;
 			}
 
-			return offsetParent || documentElement;
+			return offsetParent || documentElement$1;
 		} );
 	}
 } );

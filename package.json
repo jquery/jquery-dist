@@ -2,38 +2,44 @@
   "name": "jquery",
   "title": "jQuery",
   "description": "JavaScript library for DOM operations",
-  "version": "4.0.0-beta",
+  "version": "4.0.0-beta.2",
   "type": "module",
   "exports": {
     ".": {
       "node": {
-        "module": "./dist-module/jquery.module.js",
-        "import": "./dist-module/jquery.node-module-wrapper.js",
-        "require": "./dist/jquery.js"
+        "import": "./dist-module/wrappers/jquery.node-module-wrapper.js",
+        "default": "./dist/jquery.js"
       },
-      "production": "./dist-module/jquery.module.min.js",
-      "development": "./dist-module/jquery.module.js",
-      "script": "./dist/jquery.min.js",
-      "default": "./dist-module/jquery.module.min.js"
+      "module": {
+        "import": "./dist-module/jquery.module.js",
+        "default": "./dist/wrappers/jquery.bundler-require-wrapper.js"
+      },
+      "import": "./dist-module/jquery.module.js",
+      "default": "./dist/jquery.js"
     },
     "./slim": {
       "node": {
-        "module": "./dist-module/jquery.slim.module.js",
-        "import": "./dist-module/jquery.node-module-wrapper.slim.js",
-        "require": "./dist/jquery.slim.js"
+        "import": "./dist-module/wrappers/jquery.node-module-wrapper.slim.js",
+        "default": "./dist/jquery.slim.js"
       },
-      "production": "./dist-module/jquery.slim.module.min.js",
-      "development": "./dist-module/jquery.slim.module.js",
-      "script": "./dist/jquery.slim.min.js",
-      "default": "./dist-module/jquery.slim.module.min.js"
+      "module": {
+        "import": "./dist-module/jquery.slim.module.js",
+        "default": "./dist/wrappers/jquery.bundler-require-wrapper.slim.js"
+      },
+      "import": "./dist-module/jquery.slim.module.js",
+      "default": "./dist/jquery.slim.js"
     },
     "./factory": {
       "node": "./dist/jquery.factory.js",
-      "default": "./dist-module/jquery.factory.module.js"
+      "module": "./dist-module/jquery.factory.module.js",
+      "import": "./dist-module/jquery.factory.module.js",
+      "default": "./dist/jquery.factory.js"
     },
     "./factory-slim": {
       "node": "./dist/jquery.factory.slim.js",
-      "default": "./dist-module/jquery.factory.slim.module.js"
+      "module": "./dist-module/jquery.factory.slim.module.js",
+      "import": "./dist-module/jquery.factory.slim.module.js",
+      "default": "./dist/jquery.factory.slim.js"
     },
     "./src/*.js": "./src/*.js"
   },
@@ -41,7 +47,7 @@
   "homepage": "https://jquery.com",
   "author": {
     "name": "OpenJS Foundation and other contributors",
-    "url": "https://github.com/jquery/jquery/blob/main/AUTHORS.txt"
+    "url": "https://github.com/jquery/jquery/blob/4.0.0-beta.2/AUTHORS.txt"
   },
   "repository": {
     "type": "git",

@@ -5,7 +5,7 @@
 For information on how to get started and how to use jQuery, please see [jQuery's documentation](https://api.jquery.com/).
 For source files and issues, please visit the [jQuery repo](https://github.com/jquery/jquery).
 
-If upgrading, please see the [blog post for 4.0.0-beta](https://blog.jquery.com/2024/02/06/jquery-4-0-0-beta/). This includes notable differences from the previous version and a more readable changelog.
+If upgrading, please see the [blog post for 4.0.0-beta.2](https://blog.jquery.com/2024/07/11/second-beta-of-jquery-4-0-0/). This includes notable differences from the previous version and a more readable changelog.
 
 ## Including jQuery
 
@@ -16,14 +16,14 @@ Below are some of the most common ways to include jQuery.
 #### Script tag
 
 ```html
-<script src="https://code.jquery.com/jquery-4.0.0-beta.min.js"></script>
+<script src="https://code.jquery.com/jquery-4.0.0-beta.2.min.js"></script>
 ```
 
 or, to use the jQuery ECMAScript module:
 
 ```html
 <script type="module">
-	import { $ } from "https://code.jquery.com/jquery-4.0.0-beta.module.min.js";
+	import { $ } from "https://code.jquery.com/jquery-4.0.0-beta.2.module.min.js";
 </script>
 ```
 
@@ -31,7 +31,7 @@ or:
 
 ```html
 <script type="module">
-	import { jQuery } from "https://code.jquery.com/jquery-4.0.0-beta.module.min.js";
+	import { jQuery } from "https://code.jquery.com/jquery-4.0.0-beta.2.module.min.js";
 </script>
 ```
 
@@ -39,7 +39,7 @@ All jQuery modules export named `$` & `jQuery` tokens; the further examples will
 
 ```html
 <script type="module">
-	import $ from "https://code.jquery.com/jquery-4.0.0-beta.module.min.js";
+	import $ from "https://code.jquery.com/jquery-4.0.0-beta.2.module.min.js";
 </script>
 ```
 
@@ -48,14 +48,14 @@ However, named imports provide better interoperability across tooling and are th
 Sometimes you don’t need AJAX, or you prefer to use one of the many standalone libraries that focus on AJAX requests. And often it is simpler to use a combination of CSS, class manipulation or the Web Animations API. Similarly, many projects opt into relying on native browser promises instead of jQuery Deferreds. Along with the regular version of jQuery that includes the `ajax`, `callbacks`, `deferred`, `effects` & `queue` modules, we’ve released a “slim” version that excludes these modules. You can load it as a regular script:
 
 ```html
-<script src="https://code.jquery.com/jquery-4.0.0-beta.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-4.0.0-beta.2.slim.min.js"></script>
 ```
 
 or as a module:
 
 ```html
 <script type="module">
-	import { $ } from "https://code.jquery.com/jquery-4.0.0-beta.module.slim.min.js";
+	import { $ } from "https://code.jquery.com/jquery-4.0.0-beta.2.module.slim.min.js";
 </script>
 ```
 
@@ -67,8 +67,8 @@ To avoid repeating long import paths that change on each jQuery release, you can
 <script type="importmap">
 	{
 		"imports": {
-			"jquery": "https://code.jquery.com/jquery-4.0.0-beta.module.min.js",
-			"jquery/slim": "https://code.jquery.com/jquery-4.0.0-beta.module.slim.min.js"
+			"jquery": "https://code.jquery.com/jquery-4.0.0-beta.2.module.min.js",
+			"jquery/slim": "https://code.jquery.com/jquery-4.0.0-beta.2.module.slim.min.js"
 		}
 	}
 </script>
@@ -98,7 +98,7 @@ You can also use jQuery from npm even in the browser setup. Read along for more 
 
 ### Using jQuery from npm
 
-There are several ways to use jQuery from npm. One is to use a build tool like [Webpack](https://webpack.js.org/), [Browserify](http://browserify.org/) or [Babel](https://babeljs.io/). For more information on using these tools, please refer to the corresponding project's documentation.
+There are several ways to use jQuery from npm. One is to use a build tool like [Webpack](https://webpack.js.org/), [Browserify](https://browserify.org/) or [Babel](https://babeljs.io/). For more information on using these tools, please refer to the corresponding project's documentation.
 
 Another way is to use jQuery directly in Node.js. See the [Node.js pre-requisites](#nodejs-pre-requisites) section for more details on the Node.js-specific part of this.
 
@@ -119,6 +119,8 @@ If you need to use jQuery in a file that's not an ECMAScript module, you can use
 ```js
 const $ = require( "jquery" );
 ```
+
+The CommonJS module _does not_ expose named `$` & `jQuery` exports.
 
 #### Individual modules
 
