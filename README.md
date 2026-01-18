@@ -5,7 +5,7 @@
 For information on how to get started and how to use jQuery, please see [jQuery's documentation](https://api.jquery.com/).
 For source files and issues, please visit the [jQuery repo](https://github.com/jquery/jquery).
 
-If upgrading, please see the [blog post for 4.0.0-rc.2](https://blog.jquery.com/2026/01/17/jquery-4-0-0/). This includes notable differences from the previous version and a more readable changelog.
+If upgrading, please see the [blog post for 4.0.0](https://blog.jquery.com/2026/01/17/jquery-4-0-0/). This includes notable differences from the previous version and a more readable changelog.
 
 ## Including jQuery
 
@@ -16,14 +16,14 @@ Below are some of the most common ways to include jQuery.
 #### Script tag
 
 ```html
-<script src="https://code.jquery.com/jquery-4.0.0-rc.2.min.js"></script>
+<script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
 ```
 
 or, to use the jQuery ECMAScript module:
 
 ```html
 <script type="module">
-	import { $ } from "https://code.jquery.com/jquery-4.0.0-rc.2.module.min.js";
+	import { $ } from "https://code.jquery.com/jquery-4.0.0.module.min.js";
 </script>
 ```
 
@@ -31,7 +31,7 @@ or:
 
 ```html
 <script type="module">
-	import { jQuery } from "https://code.jquery.com/jquery-4.0.0-rc.2.module.min.js";
+	import { jQuery } from "https://code.jquery.com/jquery-4.0.0.module.min.js";
 </script>
 ```
 
@@ -39,7 +39,7 @@ All jQuery modules export named `$` & `jQuery` tokens; the further examples will
 
 ```html
 <script type="module">
-	import $ from "https://code.jquery.com/jquery-4.0.0-rc.2.module.min.js";
+	import $ from "https://code.jquery.com/jquery-4.0.0.module.min.js";
 </script>
 ```
 
@@ -48,14 +48,14 @@ However, named imports provide better interoperability across tooling and are th
 Sometimes you don’t need AJAX, or you prefer to use one of the many standalone libraries that focus on AJAX requests. And often it is simpler to use a combination of CSS, class manipulation or the Web Animations API. Similarly, many projects opt into relying on native browser promises instead of jQuery Deferreds. Along with the regular version of jQuery that includes the `ajax`, `callbacks`, `deferred`, `effects` & `queue` modules, we’ve released a “slim” version that excludes these modules. You can load it as a regular script:
 
 ```html
-<script src="https://code.jquery.com/jquery-4.0.0-rc.2.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-4.0.0.slim.min.js"></script>
 ```
 
 or as a module:
 
 ```html
 <script type="module">
-	import { $ } from "https://code.jquery.com/jquery-4.0.0-rc.2.module.slim.min.js";
+	import { $ } from "https://code.jquery.com/jquery-4.0.0.module.slim.min.js";
 </script>
 ```
 
@@ -67,8 +67,8 @@ To avoid repeating long import paths that change on each jQuery release, you can
 <script type="importmap">
 	{
 		"imports": {
-			"jquery": "https://code.jquery.com/jquery-4.0.0-rc.2.module.min.js",
-			"jquery/slim": "https://code.jquery.com/jquery-4.0.0-rc.2.module.slim.min.js"
+			"jquery": "https://code.jquery.com/jquery-4.0.0.module.min.js",
+			"jquery/slim": "https://code.jquery.com/jquery-4.0.0.module.slim.min.js"
 		}
 	}
 </script>
