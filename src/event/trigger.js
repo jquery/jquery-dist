@@ -1,15 +1,11 @@
-define( [
-	"../core",
-	"../var/document",
-	"../data/var/dataPriv",
-	"../data/var/acceptData",
-	"../var/hasOwn",
-	"../var/isFunction",
-	"../var/isWindow",
-	"../event"
-], function( jQuery, document, dataPriv, acceptData, hasOwn, isFunction, isWindow ) {
+import { jQuery } from "../core.js";
+import { document } from "../var/document.js";
+import { dataPriv } from "../data/var/dataPriv.js";
+import { acceptData } from "../data/var/acceptData.js";
+import { hasOwn } from "../var/hasOwn.js";
+import { isWindow } from "../var/isWindow.js";
 
-"use strict";
+import "../event.js";
 
 var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
 	stopPropagationCallback = function( e ) {
@@ -20,12 +16,12 @@ jQuery.extend( jQuery.event, {
 
 	trigger: function( event, data, elem, onlyHandlers ) {
 
-		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
-			eventPath = [ elem || document ],
+		var i, cur, tmp, eventPath, bubbleType, ontype, handle, special, lastElement,
 			type = hasOwn.call( event, "type" ) ? event.type : event,
 			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
 
 		cur = lastElement = tmp = elem = elem || document;
+		eventPath = [ cur ];
 
 		// Don't do events on text and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
@@ -95,10 +91,10 @@ jQuery.extend( jQuery.event, {
 		}
 
 		// Fire handlers on the event path
-		i = 0;
-		while ( ( cur = eventPath[ i++ ] ) && !event.isPropagationStopped() ) {
+		for ( i = 0; i < eventPath.length && !event.isPropagationStopped(); i++ ) {
+			cur = eventPath[ i ];
 			lastElement = cur;
-			event.type = i > 1 ?
+			event.type = i ?
 				bubbleType :
 				special.bindType || type;
 
@@ -129,7 +125,7 @@ jQuery.extend( jQuery.event, {
 
 				// Call a native DOM method on the target with the same name as the event.
 				// Don't do default actions on window, that's where global variables be (trac-6170)
-				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
+				if ( ontype && typeof elem[ type ] === "function" && !isWindow( elem ) ) {
 
 					// Don't re-trigger an onFOO event when we call its FOO() method
 					tmp = elem[ ontype ];
@@ -193,7 +189,4 @@ jQuery.fn.extend( {
 			return jQuery.event.trigger( type, data, elem, true );
 		}
 	}
-} );
-
-return jQuery;
 } );

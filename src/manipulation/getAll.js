@@ -1,23 +1,17 @@
-define( [
-	"../core",
-	"../core/nodeName",
-	"../var/arr"
-], function( jQuery, nodeName, arr ) {
+import { jQuery } from "../core.js";
+import { nodeName } from "../core/nodeName.js";
 
-"use strict";
+export function getAll( context, tag ) {
 
-function getAll( context, tag ) {
-
-	// Support: IE <=9 - 11 only
+	// Support: IE <=9 - 11+
 	// Use typeof to avoid zero-argument method invocation on host objects (trac-15151)
 	var ret;
 
-	if ( typeof context.getElementsByTagName !== "undefined" ) {
+	if ( typeof context.querySelectorAll !== "undefined" ) {
 
-		// Use slice to snapshot the live collection from gEBTN
-		ret = arr.slice.call( context.getElementsByTagName( tag || "*" ) );
-
-	} else if ( typeof context.querySelectorAll !== "undefined" ) {
+		// Note: we don't escape the tag here as we only pass
+		// ones that don't require escaping. As soon as that changes,
+		// wrap `tag` with `jQuery.escapeSelector`.
 		ret = context.querySelectorAll( tag || "*" );
 
 	} else {
@@ -30,6 +24,3 @@ function getAll( context, tag ) {
 
 	return ret;
 }
-
-return getAll;
-} );

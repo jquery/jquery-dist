@@ -111,7 +111,7 @@ Mike Sherov <mike.sherov@gmail.com>
 Greg Hazel <ghazel@gmail.com>
 Schalk Neethling <schalk@ossreleasefeed.com>
 Denis Knauf <Denis.Knauf@gmail.com>
-Timo Tijhof <krinklemail@gmail.com>
+Timo Tijhof <krinkle@fastmail.com>
 Steen Nielsen <swinedk@gmail.com>
 Anton Ryzhov <anton@ryzhov.me>
 Shi Chuan <shichuanr@gmail.com>
@@ -355,21 +355,28 @@ Christian Wenz <christian@wenz.org>
 Jonathan <vanillajonathan@users.noreply.github.com>
 Pierre Grimaud <grimaud.pierre@gmail.com>
 Beatriz Rezener <beatrizrezener@users.noreply.github.com>
-Natalia Sroka <37873210+natipo@users.noreply.github.com>
+Necmettin Karakaya <necmettin.karakaya@gmail.com>
 Wonhyoung Park <wh05.park@samsung.com>
 Dallas Fraser <dallas.fraser.waterloo@gmail.com>
+高灰 <www@zeroplace.cn>
 fecore1 <89127124+fecore1@users.noreply.github.com>
 ygj6 <7699524+ygj6@users.noreply.github.com>
+Bruno PIERRE <brunopierre4@yahoo.fr>
 Simon Legner <Simon.Legner@gmail.com>
-Vladimir Sitnikov <sitnikov.vladimir@gmail.com>
+Baoshuo Ren <i@baoshuo.ren>
 Anders Kaseorg <andersk@mit.edu>
 Alex <aleksandrosansan@gmail.com>
 Gabriela Gutierrez <gabigutierrez@google.com>
 Dimitri Papadopoulos Orfanos <3234522+DimitriPapadopoulos@users.noreply.github.com>
-Stephen Sigwart <ssigwart@gmail.com>
+J.Son <x@x-wx.com>
+Liam James <liam@minimaximize.com>
 ac-mmi <79802170+ac-mmi@users.noreply.github.com>
 neogy-akash <AKASHNEOGY400@GMAIL.COM>
 studystill <137779852+studystill@users.noreply.github.com>
-J.Son <xwxtwd@gmail.com>
+Ulises Gascón <ulisesgascongonzalez@gmail.com>
+Apoorv Darshan <ad13dtu@gmail.com>
 TomTensor <thetbomb@live.com>
 orbisai0security <mediratta01.pally@gmail.com>
+metsw24-max <metsw24@gmail.com>
+Naveed Khan <164054284+rootvector2@users.noreply.github.com>
+서울민트초코 <minseong130502@gmail.com>

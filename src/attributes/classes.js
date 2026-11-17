@@ -1,13 +1,8 @@
-define( [
-	"../core",
-	"../core/stripAndCollapse",
-	"../var/isFunction",
-	"../var/rnothtmlwhite",
-	"../data/var/dataPriv",
-	"../core/init"
-], function( jQuery, stripAndCollapse, isFunction, rnothtmlwhite, dataPriv ) {
+import { jQuery } from "../core.js";
+import { stripAndCollapse } from "../core/stripAndCollapse.js";
+import { rnothtmlwhite } from "../var/rnothtmlwhite.js";
 
-"use strict";
+import "../core/init.js";
 
 function getClass( elem ) {
 	return elem.getAttribute && elem.getAttribute( "class" ) || "";
@@ -25,9 +20,9 @@ function classesToArray( value ) {
 
 jQuery.fn.extend( {
 	addClass: function( value ) {
-		var classNames, cur, curValue, className, i, finalValue;
+		var classNames, cur, curValue, i, finalValue;
 
-		if ( isFunction( value ) ) {
+		if ( typeof value === "function" ) {
 			return this.each( function( j ) {
 				jQuery( this ).addClass( value.call( this, j, getClass( this ) ) );
 			} );
@@ -42,9 +37,8 @@ jQuery.fn.extend( {
 
 				if ( cur ) {
 					for ( i = 0; i < classNames.length; i++ ) {
-						className = classNames[ i ];
-						if ( cur.indexOf( " " + className + " " ) < 0 ) {
-							cur += className + " ";
+						if ( cur.indexOf( " " + classNames[ i ] + " " ) < 0 ) {
+							cur += classNames[ i ] + " ";
 						}
 					}
 
@@ -61,9 +55,9 @@ jQuery.fn.extend( {
 	},
 
 	removeClass: function( value ) {
-		var classNames, cur, curValue, className, i, finalValue;
+		var classNames, cur, curValue, i, finalValue;
 
-		if ( isFunction( value ) ) {
+		if ( typeof value === "function" ) {
 			return this.each( function( j ) {
 				jQuery( this ).removeClass( value.call( this, j, getClass( this ) ) );
 			} );
@@ -84,11 +78,10 @@ jQuery.fn.extend( {
 
 				if ( cur ) {
 					for ( i = 0; i < classNames.length; i++ ) {
-						className = classNames[ i ];
 
 						// Remove *all* instances
-						while ( cur.indexOf( " " + className + " " ) > -1 ) {
-							cur = cur.replace( " " + className + " ", " " );
+						while ( cur.indexOf( " " + classNames[ i ] + " " ) > -1 ) {
+							cur = cur.replace( " " + classNames[ i ] + " ", " " );
 						}
 					}
 
@@ -105,11 +98,9 @@ jQuery.fn.extend( {
 	},
 
 	toggleClass: function( value, stateVal ) {
-		var classNames, className, i, self,
-			type = typeof value,
-			isValidValue = type === "string" || Array.isArray( value );
+		var classNames, i, self;
 
-		if ( isFunction( value ) ) {
+		if ( typeof value === "function" ) {
 			return this.each( function( i ) {
 				jQuery( this ).toggleClass(
 					value.call( this, i, getClass( this ), stateVal ),
@@ -118,67 +109,45 @@ jQuery.fn.extend( {
 			} );
 		}
 
-		if ( typeof stateVal === "boolean" && isValidValue ) {
+		if ( typeof stateVal === "boolean" ) {
 			return stateVal ? this.addClass( value ) : this.removeClass( value );
 		}
 
 		classNames = classesToArray( value );
 
-		return this.each( function() {
-			if ( isValidValue ) {
+		if ( classNames.length ) {
+			return this.each( function() {
 
 				// Toggle individual class names
 				self = jQuery( this );
 
 				for ( i = 0; i < classNames.length; i++ ) {
-					className = classNames[ i ];
 
 					// Check each className given, space separated list
-					if ( self.hasClass( className ) ) {
-						self.removeClass( className );
+					if ( self.hasClass( classNames[ i ] ) ) {
+						self.removeClass( classNames[ i ] );
 					} else {
-						self.addClass( className );
+						self.addClass( classNames[ i ] );
 					}
 				}
+			} );
+		}
 
-			// Toggle whole class name
-			} else if ( value === undefined || type === "boolean" ) {
-				className = getClass( this );
-				if ( className ) {
-
-					// Store className if set
-					dataPriv.set( this, "__className__", className );
-				}
-
-				// If the element has a class name or if we're passed `false`,
-				// then remove the whole classname (if there was one, the above saved it).
-				// Otherwise bring back whatever was previously saved (if anything),
-				// falling back to the empty string if nothing was stored.
-				if ( this.setAttribute ) {
-					this.setAttribute( "class",
-						className || value === false ?
-							"" :
-							dataPriv.get( this, "__className__" ) || ""
-					);
-				}
-			}
-		} );
+		return this;
 	},
 
 	hasClass: function( selector ) {
-		var className, elem,
-			i = 0;
+		var className, i;
 
 		className = " " + selector + " ";
-		while ( ( elem = this[ i++ ] ) ) {
-			if ( elem.nodeType === 1 &&
-				( " " + stripAndCollapse( getClass( elem ) ) + " " ).indexOf( className ) > -1 ) {
+		for ( i = 0; i < this.length; i++ ) {
+			if ( this[ i ].nodeType === 1 &&
+				( " " + stripAndCollapse( getClass( this[ i ] ) ) + " " )
+					.indexOf( className ) > -1 ) {
 				return true;
 			}
 		}
 
 		return false;
 	}
-} );
-
 } );

@@ -1,14 +1,10 @@
-define( [
-	"./core",
-	"./core/toType",
-	"./var/rcheckableType",
-	"./var/isFunction",
-	"./core/init",
-	"./traversing", // filter
-	"./attributes/prop"
-], function( jQuery, toType, rcheckableType, isFunction ) {
+import { jQuery } from "./core.js";
+import { toType } from "./core/toType.js";
+import { rcheckableType } from "./var/rcheckableType.js";
 
-"use strict";
+import "./core/init.js";
+import "./traversing.js"; // filter
+import "./attributes/prop.js";
 
 var
 	rbracket = /\[\]$/,
@@ -62,7 +58,7 @@ jQuery.param = function( a, traditional ) {
 		add = function( key, valueOrFunction ) {
 
 			// If value is a function, invoke it and use its return value
-			var value = isFunction( valueOrFunction ) ?
+			var value = typeof valueOrFunction === "function" ?
 				valueOrFunction() :
 				valueOrFunction;
 
@@ -104,13 +100,24 @@ jQuery.fn.extend( {
 
 			// Can add propHook for "elements" to filter or add form elements
 			var elements = jQuery.prop( this, "elements" );
-			return elements ? jQuery.makeArray( elements ) : this;
+			if ( elements ) {
+				return jQuery.makeArray( elements );
+			}
+
+			// Only ensure a submittable nodeName for individual elements.
+			// Don't run this check when running `serializeArray` on a form
+			// so that form-associated custom elements can be reported.
+			if ( rsubmittable.test( this.nodeName ) ) {
+				return this;
+			}
+
+			return [];
 		} ).filter( function() {
 			var type = this.type;
 
 			// Use .is( ":disabled" ) so that fieldset[disabled] works
 			return this.name && !jQuery( this ).is( ":disabled" ) &&
-				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
+				!rsubmitterTypes.test( type ) &&
 				( this.checked || !rcheckableType.test( type ) );
 		} ).map( function( _i, elem ) {
 			var val = jQuery( this ).val();
@@ -130,5 +137,4 @@ jQuery.fn.extend( {
 	}
 } );
 
-return jQuery;
-} );
+export { jQuery, jQuery as $ };

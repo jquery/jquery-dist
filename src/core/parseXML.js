@@ -1,8 +1,4 @@
-define( [
-	"../core"
-], function( jQuery ) {
-
-"use strict";
+import { jQuery } from "../core.js";
 
 // Cross-browser xml parsing
 jQuery.parseXML = function( data ) {
@@ -11,13 +7,13 @@ jQuery.parseXML = function( data ) {
 		return null;
 	}
 
-	// Support: IE 9 - 11 only
+	// Support: IE 9 - 11+
 	// IE throws on parseFromString with invalid input.
 	try {
 		xml = ( new window.DOMParser() ).parseFromString( data, "text/xml" );
-	} catch ( _ ) {}
+	} catch ( e ) {}
 
-	parserErrorElem = xml && xml.getElementsByTagName( "parsererror" )[ 0 ];
+	parserErrorElem = xml && xml.querySelector( "parsererror" );
 	if ( !xml || parserErrorElem ) {
 		jQuery.error( "Invalid XML: " + (
 			parserErrorElem ?
@@ -29,7 +25,3 @@ jQuery.parseXML = function( data ) {
 	}
 	return xml;
 };
-
-return jQuery.parseXML;
-
-} );
