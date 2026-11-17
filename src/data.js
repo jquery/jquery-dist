@@ -1,8 +1,12 @@
-import { jQuery } from "./core.js";
-import { access } from "./core/access.js";
-import { camelCase } from "./core/camelCase.js";
-import { dataPriv } from "./data/var/dataPriv.js";
-import { dataUser } from "./data/var/dataUser.js";
+define( [
+	"./core",
+	"./core/access",
+	"./core/camelCase",
+	"./data/var/dataPriv",
+	"./data/var/dataUser"
+], function( jQuery, access, camelCase, dataPriv, dataUser ) {
+
+"use strict";
 
 //	Implementation Summary
 //
@@ -54,7 +58,7 @@ function dataAttr( elem, key, data ) {
 		if ( typeof data === "string" ) {
 			try {
 				data = getData( data );
-			} catch ( e ) {}
+			} catch ( _ ) {}
 
 			// Make sure we set the data so it isn't changed later
 			dataUser.set( elem, key, data );
@@ -104,7 +108,7 @@ jQuery.fn.extend( {
 					i = attrs.length;
 					while ( i-- ) {
 
-						// Support: IE 11+
+						// Support: IE 11 only
 						// The attrs elements can be null (trac-14894)
 						if ( attrs[ i ] ) {
 							name = attrs[ i ].name;
@@ -129,7 +133,6 @@ jQuery.fn.extend( {
 		}
 
 		return access( this, function( value ) {
-			var data;
 
 			// The calling jQuery object (element matches) is not empty
 			// (and therefore has an element appears at this[ 0 ]) and the
@@ -138,22 +141,13 @@ jQuery.fn.extend( {
 			// throw an exception if an attempt to read a data cache is made.
 			if ( elem && value === undefined ) {
 
-				// Attempt to get data from the cache
-				// The key will always be camelCased in Data
-				data = dataUser.get( elem, key );
-				if ( data !== undefined ) {
-					return data;
-				}
-
-				// Attempt to "discover" the data in
-				// HTML5 custom data-* attrs
-				data = dataAttr( elem, key );
-				if ( data !== undefined ) {
-					return data;
-				}
-
-				// We tried really hard, but the data doesn't exist.
-				return;
+				// Attempt to get data from the `dataUser` cache.
+				// The key will always be camelCased in Data.
+				// Otherwise, attempt to "discover" the data in
+				// HTML5 custom data-* attrs.
+				// If this fails as well, data doesn't exist, and
+				// we get `undefined`.
+				return dataAttr( elem, key, dataUser.get( elem, key ) );
 			}
 
 			// Set the data...
@@ -172,4 +166,5 @@ jQuery.fn.extend( {
 	}
 } );
 
-export { jQuery, jQuery as $ };
+return jQuery;
+} );

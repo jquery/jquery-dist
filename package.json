@@ -2,52 +2,12 @@
   "name": "jquery",
   "title": "jQuery",
   "description": "JavaScript library for DOM operations",
-  "version": "4.0.0",
-  "type": "module",
-  "exports": {
-    ".": {
-      "node": {
-        "import": "./dist-module/wrappers/jquery.node-module-wrapper.js",
-        "default": "./dist/jquery.js"
-      },
-      "module": {
-        "import": "./dist-module/jquery.module.js",
-        "default": "./dist/wrappers/jquery.bundler-require-wrapper.js"
-      },
-      "import": "./dist-module/jquery.module.js",
-      "default": "./dist/jquery.js"
-    },
-    "./slim": {
-      "node": {
-        "import": "./dist-module/wrappers/jquery.node-module-wrapper.slim.js",
-        "default": "./dist/jquery.slim.js"
-      },
-      "module": {
-        "import": "./dist-module/jquery.slim.module.js",
-        "default": "./dist/wrappers/jquery.bundler-require-wrapper.slim.js"
-      },
-      "import": "./dist-module/jquery.slim.module.js",
-      "default": "./dist/jquery.slim.js"
-    },
-    "./factory": {
-      "node": "./dist/jquery.factory.js",
-      "module": "./dist-module/jquery.factory.module.js",
-      "import": "./dist-module/jquery.factory.module.js",
-      "default": "./dist/jquery.factory.js"
-    },
-    "./factory-slim": {
-      "node": "./dist/jquery.factory.slim.js",
-      "module": "./dist-module/jquery.factory.slim.module.js",
-      "import": "./dist-module/jquery.factory.slim.module.js",
-      "default": "./dist/jquery.factory.slim.js"
-    },
-    "./src/*.js": "./src/*.js"
-  },
+  "version": "3.8.0",
   "main": "dist/jquery.js",
   "homepage": "https://jquery.com",
   "author": {
     "name": "OpenJS Foundation and other contributors",
-    "url": "https://github.com/jquery/jquery/blob/4.0.0/AUTHORS.txt"
+    "url": "https://github.com/jquery/jquery/blob/3.8.0/AUTHORS.txt"
   },
   "repository": {
     "type": "git",
@@ -62,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/jquery/jquery/issues"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "allowScripts": {
+    "commitplease@3.2.0": true,
+    "core-js-bundle@3.51.0": true,
+    "fsevents@2.3.3": true
+  }
 }

@@ -1,10 +1,14 @@
-import { jQuery } from "../core.js";
-import { nodeName } from "../core/nodeName.js";
-import { arr } from "../var/arr.js";
+define( [
+	"../core",
+	"../core/nodeName",
+	"../var/arr"
+], function( jQuery, nodeName, arr ) {
 
-export function getAll( context, tag ) {
+"use strict";
 
-	// Support: IE <=9 - 11+
+function getAll( context, tag ) {
+
+	// Support: IE <=9 - 11 only
 	// Use typeof to avoid zero-argument method invocation on host objects (trac-15151)
 	var ret;
 
@@ -26,3 +30,6 @@ export function getAll( context, tag ) {
 
 	return ret;
 }
+
+return getAll;
+} );
